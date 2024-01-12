@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const scriptSchema = require('./scriptSchema.cjs');
 
 const SALT_ROUNDS = 6;
 
+//While the email has to be unique, many things in the app depend on a unique username. 
+//Searching only by the email causes a security risk in which users are suceptible to 
+//email phishing, scams, or data vulnerability.
+
 const userSchema = new Schema({
-    name: {type: String, required: true},
+    name: {type: String, unique: true, required: true},
     email: {
         type: String,
         unique: true,
@@ -18,7 +23,8 @@ const userSchema = new Schema({
         trim: true,
         minLength: 3,
         required: true
-    }
+    },
+    scriptHut: [scriptSchema]
 },{
     timestamps: true,
     toJSON: {

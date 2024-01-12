@@ -1,32 +1,35 @@
-import React from 'react'
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
 
+export default function CodeEditor(props){
+    console.log(props.codeState);
+    const innerText = 
+        (props.codeState.userCode === 'default') ?
+        `#include <iostream>
 
-function NewScriptPage() {
-  return (
-    <div className='new-script-page-container'>
-      <h1>NewScriptPage</h1>
-      <AceEditor
+int main(){
+  std::cout << "Hello World!" << std::endl;
+  return 0;
+}`
+        :
+        props.codeState.userCode
+        ;
+
+    return(
+        <AceEditor
         placeholder="Placeholder Text"
         mode="c_cpp"
         theme="terminal"
         name="blah2"
         // onLoad={this.onLoad}
-        // onChange={this.onChange}
+        onChange={(e)=>props.codeState.setUserCode(e)}//
         fontSize={14}
         showPrintMargin={true}
         showGutter={true}
         highlightActiveLine={true}
-        value={
-`#include <iostream>
-
-int main(){
-  std::cout << "Hello World!" << std::endl;
-  return 0;
-}`}
+        value={innerText}
         setOptions={{
         enableBasicAutocompletion: false,
         enableLiveAutocompletion: false,
@@ -35,9 +38,5 @@ int main(){
         tabSize: 2,
         }}
     />
-            
-    </div>
-  )
+    )
 }
-
-export default NewScriptPage

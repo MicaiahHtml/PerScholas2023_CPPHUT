@@ -6,7 +6,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 
 // define variables
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Connect to the database
 require('./config/database.cjs');

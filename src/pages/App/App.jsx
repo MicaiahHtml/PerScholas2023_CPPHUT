@@ -1,6 +1,6 @@
 // import dependencies
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // import my functionality that I've added
 import { getUser } from '../../utilities/users-services';
@@ -10,8 +10,9 @@ import './App.css'
 
 // import pages
 import AuthPage from '../Auth/AuthPage';
-import NewScriptPage from '../NewScript/NewScriptPage';
-import ScriptHistoryPage from '../ScriptHistory/ScriptHistoryPage';
+import ScriptPage from '../Script/ScriptPage';
+import ScriptHutPage from '../ScriptHut/ScriptHutPage';
+import SearchHutsPage from '../SearchHutsPage/SearchHutsPage';
 
 // import components
 import NavBar from '../../components/NavBar';
@@ -31,8 +32,11 @@ function App() {
           <>
             <NavBar user={user} setUser={setUser}/>
             < Routes >
-              <Route path='/new-script' element={<NewScriptPage />}/>
-              <Route path={user.name + '/scripts'} element={<ScriptHistoryPage />}/>
+              <Route path='/new-script' element={<ScriptPage code = 'default'/>}/>
+              {/* <Route path={user.name + '/scripts'} element={<ScriptHistoryPage />}/> */}
+              <Route path='huts/my' element={<ScriptHutPage user = 'my'/>}/>
+              <Route path='huts' element={<SearchHutsPage/>}/>
+              <Route path='/' element={<Navigate to='huts/my'/>}/> 
             </Routes>
           </>
           :

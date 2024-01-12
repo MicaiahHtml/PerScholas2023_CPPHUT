@@ -15,13 +15,7 @@ function checkToken(req, res) {
   }
 
 async function create(req, res) {
-    // baby steps...
-    // res.json({
-    //     user: {
-    //         name: req.body.name,
-    //         email: req.body.email
-    //     }
-    // });
+
 
     try {
         // Add the User to the database
