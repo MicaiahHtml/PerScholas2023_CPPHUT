@@ -24,7 +24,7 @@ const userSchema = new Schema({
         minLength: 3,
         required: true
     },
-    scriptHut: [scriptSchema]
+    scriptHut: [ Schema.Types.ObjectId ]
 },{
     timestamps: true,
     toJSON: {

@@ -32,9 +32,9 @@ function App() {
           <>
             <NavBar user={user} setUser={setUser}/>
             < Routes >
-              <Route path='/new-script' element={<ScriptPage code = 'default'/>}/>
+              <Route path='/new-script' element={<ScriptPage code='default' title='' user={user}/>}/>
               {/* <Route path={user.name + '/scripts'} element={<ScriptHistoryPage />}/> */}
-              <Route path='huts/my' element={<ScriptHutPage user = 'my'/>}/>
+              <Route path='huts/my' element={<ScriptHutPage user='my'/>}/>
               <Route path='huts' element={<SearchHutsPage/>}/>
               <Route path='/' element={<Navigate to='huts/my'/>}/> 
             </Routes>

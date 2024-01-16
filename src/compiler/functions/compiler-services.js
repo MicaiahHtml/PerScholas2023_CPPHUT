@@ -51,9 +51,6 @@ const checkStatus = async (token, onCompile) => {
 }
 //handleCompile takes the code from the editor and input (from alert at first, then a text box).
 export async function handleCompile (code, userInput, onCompile) {
-    
-    //before implementing whole thing
-    //alert(code);
     //const variables
 
     setProcessing(true);
@@ -62,9 +59,6 @@ export async function handleCompile (code, userInput, onCompile) {
         source_code: btoa(code),
         stdin: btoa(userInput)
     };
-    //console.log(config.REACT_APP_RAPID_API_HOST);
-    //console.log(import.meta.env.VITE_REACT_APP_RAPID_API_URL);
-    //console.log(Object.keys(config));
 
     const options = {
         method: "POST",

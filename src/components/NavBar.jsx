@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import * as userService from '../utilities/users-services';
-//import { getUser } from '../../utilities/users-services';
-//import { useState } from 'react';
 
 function NavBar(props) {
   // Add in functionality to log out

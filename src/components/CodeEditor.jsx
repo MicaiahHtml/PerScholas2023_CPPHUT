@@ -4,7 +4,7 @@ import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 export default function CodeEditor(props){
-    console.log(props.codeState);
+    //console.log(props.codeState);
     const innerText = 
         (props.codeState.userCode === 'default') ?
         `#include <iostream>

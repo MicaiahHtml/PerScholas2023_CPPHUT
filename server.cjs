@@ -2,7 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
+//const favicon = require('serve-favicon');
 const logger = require('morgan');
 
 // define variables
@@ -38,6 +38,7 @@ app.get('/api/test', (req, res) => {
   });
 
 app.use('/api/users', require('./routes/api/users.cjs'));
+app.use('/api/huts', require('./routes/api/hut.cjs'));
 // we have included the line 
 // const userRouter = require('./routes/api/users.cjs')
 // app.use('/api/user', userRouter);
