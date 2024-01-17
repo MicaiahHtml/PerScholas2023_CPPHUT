@@ -2,7 +2,7 @@
 
 By Micaiah Vinson - PERSCHOLAS 2023 MOD 3 FINAL 
 
-##Introduction
+## Introduction
 
 CPPHUT.com is a script-sharing website where you can compile your own scripts, create/save/edit/delete scripts in your script hut, search for other huts, and clone other people's scripts. It is an extensive demonstration of back-end development with full-stack understanding, showcasing database management with many efficient Mongoose operations.
 
@@ -25,10 +25,10 @@ CPPHUT.com is a script-sharing website where you can compile your own scripts, c
 - Trello: https://trello.com/invite/b/Zcu7nvRN/ATTI0915efd1d99f0bcd8276c0cd02cb8d11CBFAF5BD/perscholasfinal (Please do not move the cards!)
 - Deployment: (coming soon!)
 
-##Unsolved Problems
+## Unsolved Problems
 - 404 links don't show always the problem passed to them.
 
-##Future Enhancements
+## Future Enhancements
 - Using Bootstrap to enhance the front-end of the application
 - Stretch Goal Feature: Download + Upload Scripts to and from your machine
 - Stretch Goal Feature: Access account settings to change name, change email, change password, and completely delete account and all associated scripts
