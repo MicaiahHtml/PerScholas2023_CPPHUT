@@ -18,7 +18,7 @@ export default function ScriptHutPage(props) {
   
   const [thisUser, setThisUser] = useState({});
   const [isParamUserCurUser, setIsParamUserCurUser] = useState(false);
-
+  const [scriptHutTitle, setScriptHutTitle] = useState('loading...');
   const [scriptList, setScriptList] = useState([]);
   //useEffect(()=>{console.log(scriptList)}, [scriptList]);
   
@@ -38,17 +38,22 @@ export default function ScriptHutPage(props) {
   const prepareHutIfNotYours = async ()=>{ //if not our script hut, set it up for other users
     setThisUser('loading');
     if(thisParams.userName && !props.user){
-      console.log("We're at someone else's hut :) ");
+      //console.log("We're at someone else's hut :) ");
       const q = thisParams.userName;
       //console.log(q);
       //const res = await findUserByName(q);
       //setThisUser(res);
-      await findUserByName(q).then(result=>setThisUser(result));
+      await findUserByName(q).then((result)=>{
+        if(result.name == curUser.name) window.location.href = '/huts/my';
+        setThisUser(result);
+        setScriptHutTitle(result.name + "'s ScriptHut");
+      });
       
-      console.log(thisUser);
+      //console.log(thisUser);
     }else{
       setIsParamUserCurUser(true);
       setThisUser(props.user);
+      setScriptHutTitle("My ScriptHut");
       //console.log(props.user);
     }
     hutSign = (isParamUserCurUser) ? 'My Hut' : `${thisUser.name}\'s Hut`;
@@ -79,7 +84,7 @@ export default function ScriptHutPage(props) {
 
   return (
     <div>
-      <h1>ScriptHut</h1>
+      <h1>{scriptHutTitle}</h1>
       <p>{hutSign}</p>
       <section className='cards'>
         {

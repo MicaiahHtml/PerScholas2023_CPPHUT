@@ -30,18 +30,20 @@ function SearchHutsPage(props) {
         type='text' 
         onChange={(evt)=>{
           setSearchVal(evt.target.value)
-          //getHutData();
+          getHutData();
         }}
       />
-      <button type="button" onClick={getHutData}>Search</button>
-
+      {/* <button type="button" onClick={getHutData}>Search</button> */}
+      <br></br>
       {
         results.length 
         ?
-        // <p>results found</p>
         results.map((item)=>{
           return(
+            <span>
             <a href = {`/huts/${item.name}`}>{item.name}</a>
+            <br></br>
+            </span>
           )
         })
         :
