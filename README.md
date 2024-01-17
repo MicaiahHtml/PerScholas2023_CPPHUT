@@ -27,6 +27,7 @@ CPPHUT.com is a script-sharing website where you can compile your own scripts, c
 
 ## Unsolved Problems
 - 404 links don't show always the problem passed to them.
+- Deleting a script deletes from Script Schema but fails to delete it from the User schema.
 
 ## Future Enhancements
 - Using Bootstrap to enhance the front-end of the application
