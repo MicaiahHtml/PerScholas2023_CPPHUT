@@ -112,7 +112,7 @@ async function destroyScript(req, res){
             if(requestedScript) break;
         }
         if(!requestedScript) throw new Error('Validating script address failed: Requested User Doesn\'t Have Requested Script');
-        console.log("requestedScript: ", requestedScript);
+        //console.log("requestedScript: ", requestedScript);
         //END LOOK FOR SCRIPT CODE BLOCK
 
         const finalScriptChange = await Script.deleteOne({_id: requestedScript._id});
@@ -120,7 +120,7 @@ async function destroyScript(req, res){
             {_id: requestedUser._id}, 
             {$pull: {scriptHut: requestedScript._id} }
         );
-        console.log({finalScriptChange, finalUserChange});
+        //console.log({finalScriptChange, finalUserChange});
         res.status(200).json(`Delete completed:${{finalScriptChange, finalUserChange}}`);
     }catch(e){
         console.log(e);
@@ -143,7 +143,7 @@ async function renameScript(req, res){
              if(requestedScript) break;
          }
          if(!requestedScript) throw new Error('Validating script address failed: Requested User Doesn\'t Have Requested Script');
-         console.log("requestedScript: ", requestedScript);
+         //console.log("requestedScript: ", requestedScript);
          //END LOOK FOR SCRIPT CODE BLOCK
 
          //script.update

@@ -23,7 +23,7 @@ CPPHUT.com is a script-sharing website where you can compile your own scripts, c
 
 ## Getting Started
 - Trello: https://trello.com/invite/b/Zcu7nvRN/ATTI0915efd1d99f0bcd8276c0cd02cb8d11CBFAF5BD/perscholasfinal (Please do not move the cards!)
-- Deployment: (coming soon!)
+- Deployment: https://cpphut.onrender.com/
 
 ## Unsolved Problems
 - 404 links don't show always the problem passed to them.

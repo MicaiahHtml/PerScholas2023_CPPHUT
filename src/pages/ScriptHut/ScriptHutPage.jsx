@@ -67,7 +67,7 @@ export default function ScriptHutPage(props) {
     a();
   },[]);
   useEffect(()=>{
-    console.log(thisUser)
+    //console.log(thisUser)
     async function b(){await getScriptList(thisUser)}
     if(thisUser != {}) b();
   }, [thisUser])
