@@ -5,7 +5,9 @@ const bcrypt = require('bcrypt');
 module.exports = {
     create,
     login,
-    checkToken
+    checkToken,
+    searchForHuts,
+    findUserByName
 }
 
 function checkToken(req, res) {
@@ -49,6 +51,31 @@ async function login(req, res) {
     } catch (err) {
         console.log(err);
         res.status(400).json('Bad Credentials');
+    }
+}
+
+async function searchForHuts(req, res){
+    try{
+        const query = req.params.q;
+        const results = await User.find({name: {$regex : query}});
+        res.status(200).json(results);
+        return results;
+    }catch(e){
+        console.log(e);
+        res.status(400).json({msg: e.message})
+    }
+}
+
+async function findUserByName(req, res){
+    try{
+        const query = req.params.q;
+        const results = await User.findOne({name: query});
+        //console.log(results.json());
+        res.status(200).json(results);
+        return results;
+    }catch(e){
+        console.log(e);
+        res.status(400).json({msg: e.message});
     }
 }
 

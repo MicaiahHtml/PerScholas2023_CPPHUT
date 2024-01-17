@@ -53,3 +53,14 @@ export function logOut() {
 export function checkToken() {
     return usersAPI.checkToken().then((dateStr) => new Date(dateStr));
 }
+
+export async function searchForHuts(searchVal){ //FINDS USERS CONTAINING LETTERS FROM SEARCH VAL
+    const res = await usersAPI.searchForHuts(searchVal);
+    return res;
+}
+
+export async function findUserByName(searchVal){
+    //console.log(searchVal);
+    const res = await usersAPI.findUserByName(searchVal);
+    return res;
+}

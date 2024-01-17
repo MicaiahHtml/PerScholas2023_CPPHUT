@@ -43,8 +43,9 @@ int main(){
               <Route path='/new-script' element={<ScriptPage mode='new' code={cppDefault} title='' user={user}/>}/>
               <Route path='/clone-script' element={<ScriptPage mode='clone' user={user}/>}/>
               <Route path='/edit-script' element={<ScriptPage mode='edit' user={user}/>}/>
-              <Route path='/huts/my' element={<ScriptHutPage user={user} path='my'/>}/> 
+              <Route path='/huts/my' element={<ScriptHutPage user={user}/>}/> 
               {/*path=my means if the path is huts/{username} and username is this user, redirect to huts/my */}
+              <Route path='/huts/:userName' element={<ScriptHutPage/>}/>
               <Route path='/huts' element={<SearchHutsPage/>}/>
               <Route path='/huts/my/:scriptName' element={<ViewScriptPage userName={user.name}/>}/>
               <Route path='/huts/:userName/:scriptName' element={<ViewScriptPage/>}/>

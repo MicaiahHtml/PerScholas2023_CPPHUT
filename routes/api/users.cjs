@@ -16,4 +16,8 @@ router.post('/', usersCtrl.create);
 // POST /api/users/login
 router.post('/login', usersCtrl.login);
 
+router.get('/searchForHuts/:q', usersCtrl.searchForHuts);
+
+router.get('/findUserByName/:q', usersCtrl.findUserByName);
+
 module.exports = router;

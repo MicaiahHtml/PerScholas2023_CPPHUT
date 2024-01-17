@@ -22,6 +22,8 @@ function NavBar(props) {
         <span>Welcome, {props.user.name}</span>
         &nbsp; | &nbsp;
         <Link to="" onClick={handleLogOut}>Log Out</Link>
+        &nbsp; | &nbsp;
+        <Link to="/huts">Search Huts</Link>
     </nav>
   )
 }

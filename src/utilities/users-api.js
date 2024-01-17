@@ -13,7 +13,16 @@ export function login(credentials) {
 }
 
 export function checkToken() {
-    return sendRequest(`${BASE_URL}/check-token`)
+  return sendRequest(`${BASE_URL}/check-token`);
+}
+
+export function searchForHuts(searchVal){
+  return sendRequest(`${BASE_URL}/searchForHuts/${searchVal}`);
+}
+
+export function findUserByName(searchVal){
+  //console.log(searchVal)
+  return sendRequest(`${BASE_URL}/findUserByName/${searchVal}`);
 }
 
 /*--- Helper Functions ---*/
