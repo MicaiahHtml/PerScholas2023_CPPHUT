@@ -12,7 +12,7 @@ CPPHUT.com is a script-sharing website where you can compile your own scripts, c
 ![SCRIPTING SCREENSHOT](./documentation/scrnsht%201.jpg)
 ![SEARCHING SCREENSHOT](./documentation/scrnsht%202.jpg)
 
-##Technologies Used
+## Technologies Used
 - ACE EDITOR: editor for code
 - Judge0: Compiling API for code
 - JSEncrypt: encryption for script cookie security
@@ -21,7 +21,7 @@ CPPHUT.com is a script-sharing website where you can compile your own scripts, c
 - Bootstrap: for (future) front-end CSS
 - MongoDB: serverside database management
 
-##Getting Started
+## Getting Started
 - Trello: https://trello.com/invite/b/Zcu7nvRN/ATTI0915efd1d99f0bcd8276c0cd02cb8d11CBFAF5BD/perscholasfinal (Please do not move the cards!)
 - Deployment: (coming soon!)
 
