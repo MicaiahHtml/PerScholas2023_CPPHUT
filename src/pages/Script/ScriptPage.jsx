@@ -119,7 +119,7 @@ export default function ScriptPage(props) {
 
   return (
     <div className='new-script-page-container'>
-      <h1>ScriptPage</h1>
+      <h1>EditScript();</h1>
       <SaveButton saveState = {saveState} code = {userCode} title = {userTitle} currentUser = {props.user}/>
       <input className='script-title-input-box' type='text' value={userTitle}onChange={updateUserTitle}/>
       <CodeEditor codeState={codeState} saveState={saveState}/>
