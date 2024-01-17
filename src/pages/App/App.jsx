@@ -17,6 +17,7 @@ import SearchHutsPage from '../SearchHutsPage/SearchHutsPage';
 // import components
 import NavBar from '../../components/NavBar';
 import ViewScriptPage from '../ViewScriptPage/ViewScriptPage';
+import Generic404 from '../Generic404/Generic404';
 
 function App() {
   const [user, setUser] = useState(getUser());
@@ -39,15 +40,15 @@ int main(){
           <>
             <NavBar user={user} setUser={setUser}/>
             <Routes>
-              <Route path='/new-script' element={<ScriptPage code={cppDefault} title='' user={user}/>}/>
-              {/* <Route path={user.name + '/scripts'} element={<ScriptHistoryPage />}/> */}
+              <Route path='/new-script' element={<ScriptPage mode='new' code={cppDefault} title='' user={user}/>}/>
+              <Route path='/clone-script' element={<ScriptPage mode='clone' user={user}/>}/>
+              <Route path='/edit-script' element={<ScriptPage mode='edit' user={user}/>}/>
               <Route path='/huts/my' element={<ScriptHutPage user={user} path='my'/>}/> 
               {/*path=my means if the path is huts/{username} and username is this user, redirect to huts/my */}
               <Route path='/huts' element={<SearchHutsPage/>}/>
-              {/* <Route path='/scripts' element={<Navigate to='/huts/my'/>}/> */}
               <Route path='/huts/my/:scriptName' element={<ViewScriptPage userName={user.name}/>}/>
               <Route path='/huts/:userName/:scriptName' element={<ViewScriptPage/>}/>
-
+              <Route path='/404/:problem' element={<Generic404/>}/>
 
               <Route path='/' element={<Navigate to='/huts/my'/>}/> 
               <Route path="*" element={<Navigate to="/" />} />

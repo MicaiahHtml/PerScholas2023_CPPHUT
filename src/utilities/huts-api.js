@@ -8,6 +8,16 @@ export function saveScript(payload, force = false){ //contains user and code use
     return sendRequest(`${BASE_URL}/saveScript`, 'POST', data);
 }
 
+export function destroyScript(payload){
+  //console.log(payload);
+  return sendRequest(`${BASE_URL}/destroyScript`, 'POST', payload);
+}
+
+export function renameScript(payload){
+  return sendRequest(`${BASE_URL}/renameScript`, 'POST', payload, false, 'userID', 'code', 'title','newTitle');
+}
+
+
 export function checkIfScriptExists(payload){
   return sendRequest(`${BASE_URL}/checkScriptExistence`, 'POST', payload);
 }
@@ -21,6 +31,7 @@ export function checkIfUserScriptExists(payload){
   //console.log(payload);
   return sendRequest(`${BASE_URL}/checkScriptUserPairExistence`, 'POST', payload, false, 'userName', 'scriptName');
 }
+
 
 async function sendRequest(url, method = 'GET', payload = null, makeForMe = true, ...objKeys) {
   // Fetch accepts an options object as the 2nd argument

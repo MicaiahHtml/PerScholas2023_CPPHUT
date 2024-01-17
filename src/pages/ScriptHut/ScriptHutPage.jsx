@@ -39,7 +39,7 @@ export default function ScriptHutPage(props) {
     } catch (err) {
       console.log(err)
     }
-  }
+  }//for checking when the user will be logged out
   if(isParamUserCurUser){
     hutSign = 'My Hut';
   }else{
@@ -56,9 +56,7 @@ export default function ScriptHutPage(props) {
         ? 
           scriptList.map(
             (ele, index) => {
-              //console.log(ele);
-              //return (<ScriptCard user={props.user} title={ele.title} code={ele.code} lastUpdated={ele.updatedAt} key = {index}/>)
-              return (<ScriptCard user={props.user} script={ele} key = {index} isParamUserCurUser={isParamUserCurUser}/>)
+              return (<ScriptCard user={props.user} script={ele} key={index} isParamUserCurUser={isParamUserCurUser}/>)
             })
         : 
         <p>no scripts yet</p>

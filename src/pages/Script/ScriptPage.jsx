@@ -1,18 +1,26 @@
 //SCRIPT PAGE IS A BEAST OF A COMPONENT! 
 
 import React from 'react'
-import CodeEditor from '../../components/CodeEditor';
-import CompileButton from '../../components/CompileButton';
 import { useState, useEffect } from 'react';
-import InputSend from '../../components/InputSend';
-import SaveButton from '../../components/SaveButton';
 import { ToastContainer, toast } from "react-toastify";
+import Cookies from 'universal-cookie';
+import JSEncrypt from "jsencrypt";
+
+
 import "react-toastify/dist/ReactToastify.css";
 
+import CodeEditor from '../../components/CodeEditor';
+import CompileButton from '../../components/CompileButton';
+import InputSend from '../../components/InputSend';
+import SaveButton from '../../components/SaveButton';
 import OutputWindow from '../../components/OutputWindow';
+import { useEffectOnce } from '../../utilities/methods/useEffectOnce';
+import { redirect } from 'react-router-dom';
+
 
 //props.code, props.title
-function ScriptPage(props) {
+export default function ScriptPage(props) {
+  
   const [userCode, setUserCode] = useState(props.code);
   const [userTitle, setUserTitle] = useState(props.title)
   const [userInput, setUserInput] = useState("");
@@ -21,6 +29,37 @@ function ScriptPage(props) {
   const [isSaved, setIsSaved] = useState(false);
   const codeState = {userCode, setUserCode}; //don't change please
   const saveState = {isSaved, setIsSaved};
+  
+  useEffectOnce(()=>{
+    if(props.mode == 'clone' || props.mode == 'edit'){
+      try{
+      const cloneCookie = new Cookies();
+      const receivedPayload = cloneCookie.get('encryptScript');
+
+      const privateKey = 
+      `-----BEGIN PRIVATE KEY-----
+      ${import.meta.env.VITE_AES_CLONE_PRIVATE_KEY}
+      -----END PRIVATE KEY-----`;
+      const decryptor = new JSEncrypt();
+      decryptor.setPrivateKey(privateKey);
+
+      const newTitle = receivedPayload.title;
+      const newCode = decryptor.decrypt(receivedPayload.code);
+
+      if(props.mode=='clone'){
+        setUserTitle(newTitle+' - '+props.user.name+'\'s copycat');
+      }else{
+        setUserTitle(newTitle);
+      }
+      setUserCode(newCode);
+
+      cloneCookie.remove('encryptScript');
+    }catch(e){
+      console.log(e);
+      window.location.href= '/404/script';
+    }
+  }},[]);
+  
   const showSuccessToast = (msg) => {
     toast.success(msg || `Compiled Successfully!`, {
       position: "top-right",
@@ -82,7 +121,7 @@ function ScriptPage(props) {
     <div className='new-script-page-container'>
       <h1>ScriptPage</h1>
       <SaveButton saveState = {saveState} code = {userCode} title = {userTitle} currentUser = {props.user}/>
-      <input className='script-title-input-box' type='text' onChange={updateUserTitle}/>
+      <input className='script-title-input-box' type='text' value={userTitle}onChange={updateUserTitle}/>
       <CodeEditor codeState={codeState} saveState={saveState}/>
       <InputSend name = "userInput" submitFunction = {updateUserInput}/> 
       <CompileButton codeState = {codeState} userInput = {userInput} functions = {compilerParameterFunctions}/>
@@ -101,5 +140,3 @@ function ScriptPage(props) {
     </div>
   )
 }
-
-export default ScriptPage

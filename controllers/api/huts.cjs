@@ -8,7 +8,9 @@ module.exports = {
     saveScript,
     checkIfScriptExists,
     checkIfUserScriptExists,
-    getScriptListFromUserHut
+    getScriptListFromUserHut,
+    destroyScript,
+    renameScript
 }
 async function checkIfScriptExists(req, res){
     try{
@@ -45,7 +47,7 @@ async function checkIfUserScriptExists(req, res){
             requestedScript = await Script.findOne({title: data.scriptName, _id: ele});
             if(requestedScript) break;
         }
-        console.log("requestedScript: ", requestedScript)
+        //console.log("requestedScript: ", requestedScript)
         if(!requestedScript) throw new Error('Validating script address failed: Requested User Doesn\'t Have Requested Script');
         res.status(200).json(requestedScript);
     }catch(e){
@@ -95,6 +97,69 @@ async function saveScript(req, res){
         res.status(400).json({ msg: e.message });
     }
 }
+async function destroyScript(req, res){
+    try{
+        //BEGIN LOOK FOR SCRIPT CODE BLOCK
+        const data = req.body[0];    //data.userName, data.scriptName
+        //console.log("HUTSCTRL DATA: ", data);
+        const comparedID = new ObjectId(data.userID);
+        let requestedScript;
+        const requestedUser = await User.findOne({_id: comparedID});
+        if(!requestedUser) throw new Error('Delete Script Fail: User Doesn\'t Exist!');
+        
+        for await(const ele of requestedUser.scriptHut){
+            requestedScript = await Script.findOne({title: data.title, code: data.code, _id: ele});
+            if(requestedScript) break;
+        }
+        if(!requestedScript) throw new Error('Validating script address failed: Requested User Doesn\'t Have Requested Script');
+        console.log("requestedScript: ", requestedScript);
+        //END LOOK FOR SCRIPT CODE BLOCK
+
+        const finalScriptChange = await Script.deleteOne({_id: requestedScript._id});
+        const finalUserChange = await User.updateOne(
+            {_id: requestedUser._id}, 
+            {$pull: {scriptHut: requestedScript._id} }
+        );
+        console.log({finalScriptChange, finalUserChange});
+        res.status(200).json(`Delete completed:${{finalScriptChange, finalUserChange}}`);
+    }catch(e){
+        console.log(e);
+        res.status(400).json({ msg: e.message });
+    }
+}
+
+async function renameScript(req, res){
+    try{
+         //BEGIN LOOK FOR SCRIPT CODE BLOCK
+         const data = req.body[0];    //data.userName, data.scriptName
+         //console.log("HUTSCTRL DATA: ", data);
+         const comparedID = new ObjectId(data.userID);
+         let requestedScript;
+         const requestedUser = await User.findOne({_id: comparedID});
+         if(!requestedUser) throw new Error('Delete Script Fail: User Doesn\'t Exist!');
+         
+         for await(const ele of requestedUser.scriptHut){
+             requestedScript = await Script.findOne({title: data.title, code: data.code, _id: ele});
+             if(requestedScript) break;
+         }
+         if(!requestedScript) throw new Error('Validating script address failed: Requested User Doesn\'t Have Requested Script');
+         console.log("requestedScript: ", requestedScript);
+         //END LOOK FOR SCRIPT CODE BLOCK
+
+         //script.update
+        const updatedScript = await Script.findOneAndUpdate(
+            {_id: requestedScript._id},
+            {title: data.newTitle},
+            {upsert: true, new: true}
+        );
+        res.status(200).json(updatedScript);
+
+    }catch(e){
+        console.log(e);
+        res.status(400).json({ msg: e.message });
+    }
+}
+
 async function getScriptListFromUserHut(req, res){ //req is just userID
     try{
         let userScripts;
