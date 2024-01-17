@@ -9,16 +9,27 @@ export function saveScript(payload, force = false){ //contains user and code use
 }
 
 export function checkIfScriptExists(payload){
-    return sendRequest(`${BASE_URL}/checkScriptExistence`, 'POST', payload);
+  return sendRequest(`${BASE_URL}/checkScriptExistence`, 'POST', payload);
 }
 
-async function sendRequest(url, method = 'GET', payload = null) {
-    // Fetch accepts an options object as the 2nd argument
-    // used to include a data payload, set headers, etc.
-    const options = { method };
-    if (payload) {
-      options.headers = { 'Content-Type': 'application/json' };
-      //if(payload.)
+export function getScriptListFromUserHut(userID){
+  //console.log(userID)
+  return sendRequest(`${BASE_URL}/${userID}`)
+}
+
+export function checkIfUserScriptExists(payload){
+  //console.log(payload);
+  return sendRequest(`${BASE_URL}/checkScriptUserPairExistence`, 'POST', payload, false, 'userName', 'scriptName');
+}
+
+async function sendRequest(url, method = 'GET', payload = null, makeForMe = true, ...objKeys) {
+  // Fetch accepts an options object as the 2nd argument
+  // used to include a data payload, set headers, etc.
+  const options = { method };
+  if (payload) {
+    options.headers = { 'Content-Type': 'application/json' };
+    //if(payload.)
+    if(makeForMe){
       const data = [{
         userID: payload.user._id,
         code: payload.code,
@@ -26,21 +37,31 @@ async function sendRequest(url, method = 'GET', payload = null) {
         force: payload.force
       }];
       options.body = JSON.stringify(data);
-      //console.log(options);
+    }else{
+      let data = [{}];
+      objKeys.forEach(
+        (ele,index)=>{
+          data[0][ele] = Object.values(payload)[index];
+        }
+      )
+      options.body = JSON.stringify(data);
     }
-  
-    // adding in to check token
-    const token = getToken();
-    if (token) {
-      // Ensure the headers object exists
-      options.headers = options.headers || {};
-      // Add token to an Authorization header
-      // Prefacing with 'Bearer' is recommended in the HTTP specification
-      options.headers.Authorization = `Bearer ${token}`;
-    }
-  
-    const res = await fetch(url, options);
-    // res.ok will be false if the status code set to 4xx in the controller action
-    if (res.ok) return res.json();
-    throw new Error('Bad Request');
+    
+    //console.log(options);
+  }
+
+  // adding in to check token
+  const token = getToken();
+  if (token) {
+    // Ensure the headers object exists
+    options.headers = options.headers || {};
+    // Add token to an Authorization header
+    // Prefacing with 'Bearer' is recommended in the HTTP specification
+    options.headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch(url, options);
+  // res.ok will be false if the status code set to 4xx in the controller action
+  if (res.ok) return res.json();
+  throw new Error('Bad Request');
   }

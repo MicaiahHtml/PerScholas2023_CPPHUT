@@ -14,7 +14,8 @@ function NavBar(props) {
 
   return (
     <nav>
-        <Link to={props.user.name+'/scripts'}>My Scripts</Link>
+        {/* <Link to={props.user.name+'/scripts'}>My Scripts</Link> */}
+        <Link to='huts/my'>My Scripts</Link>
         &nbsp; | &nbsp;
         <Link to='/new-script'>New Script</Link>
         &nbsp; | &nbsp;

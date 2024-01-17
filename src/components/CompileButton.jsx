@@ -12,7 +12,7 @@ export default function CompileButton(props){
         compilerServices.handleCompile(
             props.codeState.userCode, 
             props.userInput, 
-            props.onCompile);
+            props.functions);
     }
     return(
         <button type="button" onClick={clickHandler}>Run Script</button>

@@ -8,10 +8,13 @@ const hutsCtrl = require('../../controllers/api/huts.cjs');
 router.post('/saveScript', hutsCtrl.saveScript);
 //The developer needs to check if a script exists
 router.post('/checkScriptExistence', hutsCtrl.checkIfScriptExists);
+//The developer needs to check if a requested script 
+//AND its requested supposed owner exists, by name
+router.post('/checkScriptUserPairExistence', hutsCtrl.checkIfUserScriptExists);
 //The user needs to see their own hut
 
 //The user needs to search for huts; where
-//router.get('/huts/:q', )
+router.get('/:userID', hutsCtrl.getScriptListFromUserHut);
 
 //The user needs to see other huts
 

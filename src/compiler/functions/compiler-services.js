@@ -1,5 +1,7 @@
 import config from '../compiler.config.js';
 import axios from 'axios';
+//import { toast } from "react-toastify"; //doesn't work without jsx :(
+import "react-toastify/dist/ReactToastify.css";
 //import { useState } from "react";
 
 // module.exports = {
@@ -18,8 +20,9 @@ const useState = (defaultValue) => {
 const [processing, setProcessing] = useState(null);
 //let processing = null;
 
-const checkStatus = async (token, onCompile) => {
+const checkStatus = async (token, functions) => {
     //console.log(onCompile);
+    const onCompile = functions.onCompile;
     const options = {
         method: "GET",
         url: config.REACT_APP_RAPID_API_URL + "/" + token,
@@ -35,7 +38,7 @@ const checkStatus = async (token, onCompile) => {
         console.log(statusId);
         if(statusId === 1 || statusId === 2){
             setTimeout(()=>{
-                checkStatus(token, onCompile);
+                checkStatus(token, functions);
             }, 2000);
         }else{
             setProcessing(false);
@@ -46,12 +49,15 @@ const checkStatus = async (token, onCompile) => {
             return;
         }
     }catch(e){
-        alert(e);
+        console.log("err", e);
+        setProcessing(false);
+        functions.showErrorToast();
     }
 }
 //handleCompile takes the code from the editor and input (from alert at first, then a text box).
-export async function handleCompile (code, userInput, onCompile) {
+export async function handleCompile (code, userInput, functions) {
     //const variables
+    const onCompile = functions.onCompile;
 
     setProcessing(true);
     const formData = {
@@ -78,18 +84,19 @@ export async function handleCompile (code, userInput, onCompile) {
         .then(function(response){
             console.log("res.data", response.data);
             const token = response.data.token;
-            checkStatus(token, onCompile);
+            checkStatus(token, functions);
         })
         .catch((e)=>{
-            alert(e);
-            // let error = e.response ? e.response.data : e;
-            // let status = e.response.status;
-            // console.log("status", status);
-            // if(status === 429){
-            //     console.log("too many requests", status);
-            // }
-            // setProcessing(false);
-            // console.log("catch block...", error);
+            //alert(e);
+            let error = e.response ? e.response.data : e;
+            let status = e.response.status;
+            console.log("status", status);
+            if(status === 429){
+                console.log("too many requests", status);
+            }
+            setProcessing(false);
+            console.log("catch block...", error);
         }
     );
 };
+

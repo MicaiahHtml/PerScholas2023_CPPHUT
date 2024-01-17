@@ -6,7 +6,9 @@ const Script = require('../../models/script.cjs'); //maybe: script return cur lo
 
 module.exports = {
     saveScript,
-    checkIfScriptExists
+    checkIfScriptExists,
+    checkIfUserScriptExists,
+    getScriptListFromUserHut
 }
 async function checkIfScriptExists(req, res){
     try{
@@ -27,11 +29,43 @@ async function checkIfScriptExists(req, res){
         res.status(400).json({ msg: e.message });
     }
 }
-async function saveScript(req, res){
+
+async function checkIfUserScriptExists(req, res){
     try{
-        const data = req.body[0];    //data.code, data.userID, data.title
+        let requestedScript;
+        const data = req.body[0];    //data.userName, data.scriptName
+        //console.log("HUTSCTRL DATA: ", data);
+
+        const requestedUser = await User.findOne({name: data.userName});
+        if(!requestedUser) throw new Error('Validating script address failed: User Doesn\'t Exist!');
+        
+        const comparedID = new ObjectId(requestedUser.userID);
+
+        for await(const ele of requestedUser.scriptHut){
+            requestedScript = await Script.findOne({title: data.scriptName, _id: ele});
+            if(requestedScript) break;
+        }
+        console.log("requestedScript: ", requestedScript)
+        if(!requestedScript) throw new Error('Validating script address failed: Requested User Doesn\'t Have Requested Script');
+        res.status(200).json(requestedScript);
+    }catch(e){
+        console.log(e);
+        res.status(404).json({ msg: e.message });
+    }
+}
+async function saveScript(req, res){
+    /*
+    data{
+        code: String, 
+        userID: String, 
+        title: String,
+        force: bool
+    }
+    */
+    try{
+        const data = req.body[0];    //data.code, data.userID, data.title, data.force
         const comparedID = new ObjectId(data.userID);
-        console.log(data);
+        //console.log(data);
         if(data.force){
             
             const updatedScript = await Script.findOneAndUpdate(
@@ -59,5 +93,19 @@ async function saveScript(req, res){
     } catch(e){
         console.log(e);
         res.status(400).json({ msg: e.message });
+    }
+}
+async function getScriptListFromUserHut(req, res){ //req is just userID
+    try{
+        let userScripts;
+        const comparedID = req.params.userID;
+        const user = await User.findById(comparedID);
+        //console.log(user.scriptHut);
+        userScripts = await Script.find({user: comparedID});
+        //console.log(userScripts);
+        res.status(200).json(userScripts);
+    }catch(e){
+        console.log(e);
+        res.status(400).json({msg: e.message});
     }
 }

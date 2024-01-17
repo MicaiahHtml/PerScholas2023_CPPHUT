@@ -16,10 +16,17 @@ import SearchHutsPage from '../SearchHutsPage/SearchHutsPage';
 
 // import components
 import NavBar from '../../components/NavBar';
+import ViewScriptPage from '../ViewScriptPage/ViewScriptPage';
 
 function App() {
   const [user, setUser] = useState(getUser());
+  const cppDefault = `#include <iostream>
 
+int main(){
+  std::cout << "Hello World!" << std::endl;
+  return 0;
+}`
+  
   // in here
   // use the useState hook to define a state variable called user
   // initialize that to null
@@ -31,12 +38,19 @@ function App() {
           ?
           <>
             <NavBar user={user} setUser={setUser}/>
-            < Routes >
-              <Route path='/new-script' element={<ScriptPage code='default' title='' user={user}/>}/>
+            <Routes>
+              <Route path='/new-script' element={<ScriptPage code={cppDefault} title='' user={user}/>}/>
               {/* <Route path={user.name + '/scripts'} element={<ScriptHistoryPage />}/> */}
-              <Route path='huts/my' element={<ScriptHutPage user='my'/>}/>
-              <Route path='huts' element={<SearchHutsPage/>}/>
-              <Route path='/' element={<Navigate to='huts/my'/>}/> 
+              <Route path='/huts/my' element={<ScriptHutPage user={user} path='my'/>}/> 
+              {/*path=my means if the path is huts/{username} and username is this user, redirect to huts/my */}
+              <Route path='/huts' element={<SearchHutsPage/>}/>
+              {/* <Route path='/scripts' element={<Navigate to='/huts/my'/>}/> */}
+              <Route path='/huts/my/:scriptName' element={<ViewScriptPage userName={user.name}/>}/>
+              <Route path='/huts/:userName/:scriptName' element={<ViewScriptPage/>}/>
+
+
+              <Route path='/' element={<Navigate to='/huts/my'/>}/> 
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </>
           :
