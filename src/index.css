@@ -77,12 +77,24 @@ code {
   text-align: center;
   font-size: 2vmin;
 }
-
+.authpage-forms-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 .form-container {
   padding: 3vmin;
+  max-width: 50vw;
   background-color: var(--tan-1);
   border: .1vmin solid var(--tan-3);
   border-radius: 1vmin;
+  margin: 3vw;
+}
+
+.siteTitle{
+  font: 800 7vmin 'Play', Sans-serif;
+  color: #10a426;
+  text-shadow: -1px -1px 0 #aaf, 1px 1px 0 #236, 2px 2px 1px #777;
 }
 
 p.error-message {

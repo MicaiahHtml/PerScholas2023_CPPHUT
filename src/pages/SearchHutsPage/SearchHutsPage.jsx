@@ -23,7 +23,7 @@ function SearchHutsPage(props) {
 
   return (
     <div>
-      <h1>SearchHuts();</h1>
+      <h1>Who Are We Looking For?</h1>
       <p>Find a hut by its owner name</p>
       <input 
         className='search-huts-page-input' 

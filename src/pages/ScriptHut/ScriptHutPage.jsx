@@ -1,5 +1,4 @@
 import React from 'react'
-import {checkToken} from '../../utilities/users-services';
 import {getScriptListFromUserHut} from '../../utilities/hut-services';
 import { getUser, findUserByName } from '../../utilities/users-services';
 import {useState, useEffect} from "react";
@@ -20,7 +19,6 @@ export default function ScriptHutPage(props) {
   const [isParamUserCurUser, setIsParamUserCurUser] = useState(false);
   const [scriptHutTitle, setScriptHutTitle] = useState('loading...');
   const [scriptList, setScriptList] = useState([]);
-  //useEffect(()=>{console.log(scriptList)}, [scriptList]);
   
   const getScriptList = async(user) => {
       try{
@@ -71,15 +69,6 @@ export default function ScriptHutPage(props) {
     async function b(){await getScriptList(thisUser)}
     if(thisUser != {}) b();
   }, [thisUser])
-
-  const handleCheckToken = async () => {
-    try {
-      const expDate = await checkToken()
-      console.log(expDate)
-    } catch (err) {
-      console.log(err)
-    }
-  }//for checking when the user will be logged out
 
 
   return (

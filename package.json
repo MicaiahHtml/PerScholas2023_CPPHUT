@@ -33,6 +33,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "react-toastify": "^10.0.1",
+    "react-type-animation": "^3.2.0",
     "serve-favicon": "^2.5.0",
     "universal-cookie": "^7.0.1"
   },
