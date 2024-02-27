@@ -1,5 +1,7 @@
 # CPPHUT
 
+![UPDATED HOMEPAGE] (./documentation/cpphut.png)
+
 By Micaiah Vinson - PERSCHOLAS 2023 MOD 3 FINAL 
 
 ## Introduction
